@@ -13,5 +13,7 @@ API NEEDS DOCUMENT
 
 
 [ ] 3–6 needs statements written in the required format
-[ ] Reflection paragraph written and genuine
+
+Reflection
+As a team, we were able to discuss our system with the other teams. The discussions were lively and active, especially when it came to figuring out how our systems can fit into each other despite being so different. We each came up with several ideas and took time to meditate on them in order to choose the most suitable ones.
 
