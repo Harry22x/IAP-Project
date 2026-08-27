@@ -17,4 +17,7 @@ iv. Team 3 needs to GET general medicine-use or procedure information in order t
 
 Reflection
 As a team, we were able to discuss our system with the other teams. The discussions were lively and active, especially when it came to figuring out how our systems can fit into each other despite being so different. We each came up with several ideas and took time to meditate on them in order to choose the most suitable ones.
+When interviewing team 3 we were surprised at how similar our applications are as they both deal with the healthcare industry which made our brainstorming process much easier. 
+When interviewing team 1 we were surprised at how unique our applications were.
+
 
