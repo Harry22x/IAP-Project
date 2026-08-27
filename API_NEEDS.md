@@ -9,14 +9,6 @@ ii. Team 3 needs to GET medicine records in order to identify the medicines requ
 iii. Team 3 needs to GET patient location information in order to identify pharmacies near the patient that have the required medicine in stock and provide relevant distance and pickup information.
 iv. Team 3 needs to GET general medicine-use or procedure information in order to determine the relevant medicine requirements and provide the information needed by pharmacies to prepare or stock the required medicines.
 
-<<<<<<< HEAD
-Reflection
-As a team, we were able to discuss our system with the other teams. The discussions were lively and active, especially when it came to figuring out how our systems can fit into each other despite being so different. We each came up with several ideas and took time to meditate on them in order to choose the most suitable ones.
-When interviewing team 3 we were surprised at how similar our applications are as they both deal with the healthcare industry which made our brainstorming process much easier. 
-When interviewing team 1 we were surprised at how unique our applications were.
-
-=======
-
 
 2. Upstream partner 
 - Team 1(Jua Kali)
@@ -27,6 +19,7 @@ ii.Team 2 needs to POST a service booking with the identified worker in order to
 ii. Team 2 needs to POST a service review after the artisan has completed their job in order to comment on their work 
 
 Reflection
-As a team, we were able to discuss our system with the other teams. The discussions were lively and active, especially when it came to figuring out how our systems can fit into each other despite being so different. We each came up with several ideas and took time to meditate on them in order to choose the most suitable ones.When interviewing team 3 we were surpirsed at how similar our applications are as they both deal with the healthcare industry which made our brainstroming process much easier. When interviewing team 1 we were surprised at 
->>>>>>> cbaa5805234de7641c313a010937367992fc31cf
+As a team, we were able to discuss our system with the other teams. The discussions were lively and active, especially when it came to figuring out how our systems can fit into each other despite being so different. We each came up with several ideas and took time to meditate on them in order to choose the most suitable ones.
+When interviewing team 3 we were surprised at how similar our applications are as they both deal with the healthcare industry which made our brainstorming process much easier. 
+When interviewing team 1 we were surprised at how unique our applications were.
 
