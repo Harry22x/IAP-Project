@@ -222,11 +222,11 @@ function TCMatches() {
                                             <td className="px-6 py-4 text-sm font-mono">{r.blood_type}</td>
                                             <td className="px-6 py-4 text-sm text-right">
                                                 <button 
-                                                    onClick={() => runMatch(r.patient_id, r.name)}
-                                                    disabled={matching === r.patient_id}
+                                                    onClick={() => runMatch(r.id, r.name)}
+                                                    disabled={matching === r.id}
                                                     className="bg-green-600 text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-green-700 transition"
                                                 >
-                                                    {matching === r.patient_id ? 'Running...' : 'Run Match Algorithm'}
+                                                    {matching === r.id ? 'Running...' : 'Run Match Algorithm'}
                                                 </button>
                                             </td>
                                         </tr>

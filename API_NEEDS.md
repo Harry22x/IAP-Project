@@ -20,5 +20,5 @@ ii.Team 2 needs to POST a service booking with the identified worker in order to
 ii. Team 2 needs to POST a service review after the artisan has completed their job in order to comment on their work 
 
 Reflection
-As a team, we were able to discuss our system with the other teams. The discussions were lively and active, especially when it came to figuring out how our systems can fit into each other despite being so different. We each came up with several ideas and took time to meditate on them in order to choose the most suitable ones.When interviewing team 3 we were surpirsed at how similar our applications are as they both deal with the healthcare industry which made our brainstroming process much easier. When interviewing team 1 we were surprised at 
+As a team, we were able to discuss our system with the other teams. The discussions were lively and active, especially when it came to figuring out how our systems can fit into each other despite being so different. We each came up with several ideas and took time to meditate on them in order to choose the most suitable ones.When interviewing team 3 we were surpirsed at how similar our applications are as they both deal with the healthcare industry which made our brainstroming process much easier. 
 
