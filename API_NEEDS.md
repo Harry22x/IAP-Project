@@ -6,8 +6,8 @@ TEAM 2 API NEEDS DOCUMENT
 - Need statements: 
 i. Team 3 needs to GET patient records in order to identify the medicines required by patients, match those medicines with pharmacies that have the required stock in or near the patient's location, and obtain the appropriate patient contact information for communicating medicine availability and pickup details.
 ii. Team 3 needs to GET hospital location information in order to identify pharmacies near the patient that have the required medicine in stock and provide relevant distance and pickup information.
-iii. Team 3 needs to GET procedure information in order to determine the relevant medicine requirements and provide the information needed by pharmacies to prepare or stock the required medicines.
-iv. Team 3 needs to POST to a completed medicine delivery to the patient records.
+iii. Team 3 needs to GET prescribed medication in order to determine the relevant medicine requirements and provide the information needed by pharmacies to prepare or stock the required medicines.
+iv. Team 3 needs to POST that the medicine delivery is ready for pick-up to the patient records.
 
 
 2. Upstream partner 
