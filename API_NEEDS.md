@@ -14,6 +14,15 @@ iv. Team 3 needs to POST that the medicine delivery is ready for pick-up to the 
 - Team 1(Jua Kali)
 - We are working together in using Jua Kali to find workers for the hospital.
 
+i.Team 3 needs to GET patient records in order to identify the medicines required by patients, match those medicines with pharmacies that have the required stock in or near the patient's location, and obtain the appropriate patient contact information for communicating medicine availability and pickup details.
+
+ii.Team 3 needs to GET medicine records in order to identify the medicines required by patients and use the medicine information when searching pharmacy inventory for available stock..
+
+iii.Team 3 needs to GET general medicine-use or procedure information in order to determine the relevant medicine requirements and provide the information needed by pharmacies to prepare or stock the required medicines.
+
+iv.Team 3 needs to GET patient location information in order to identify pharmacies near the patient that have the required medicine in stock and provide relevant distance and pickup information.
+
+
 Reflection
 As a team, we were able to discuss our system with the other teams. The discussions were lively and active, especially when it came to figuring out how our systems can fit into each other despite being so different. We each came up with several ideas and took time to meditate on them in order to choose the most suitable ones.
 When interviewing team 3 we were surprised at how similar our applications are as they both deal with the healthcare industry which made our brainstorming process much easier. 
