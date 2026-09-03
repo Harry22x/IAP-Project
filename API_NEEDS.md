@@ -1,26 +1,15 @@
 TEAM 2 API NEEDS DOCUMENT
 
-1. Downstream partner 
+Downstream partner 
 - Team 3(Pharmalink)
 - We are working together to provide hospital locations where organ transplants are carried out. The locations will be used to recommend to pharmacies in the area medication to stock, based on what the patients need. 
 - Need statements: 
-i. Team 3 needs to GET patient records in order to identify the medicines required by patients, match those medicines with pharmacies that have the required stock in or near the patient's location, and obtain the appropriate patient contact information for communicating medicine availability and pickup details.
-ii. Team 3 needs to GET hospital location information in order to identify pharmacies near the patient that have the required medicine in stock and provide relevant distance and pickup information.
-iii. Team 3 needs to GET prescribed medication in order to determine the relevant medicine requirements and provide the information needed by pharmacies to prepare or stock the required medicines.
-iv. Team 3 needs to POST that the medicine delivery is ready for pick-up to the patient records.
 
-
-2. Upstream partner 
-- Team 1(Jua Kali)
-- We are working together in using Jua Kali to find workers for the hospital.
-
-i.Team 3 needs to GET patient records in order to identify the medicines required by patients, match those medicines with pharmacies that have the required stock in or near the patient's location, and obtain the appropriate patient contact information for communicating medicine availability and pickup details.
-
-ii.Team 3 needs to GET medicine records in order to identify the medicines required by patients and use the medicine information when searching pharmacy inventory for available stock..
-
-iii.Team 3 needs to GET general medicine-use or procedure information in order to determine the relevant medicine requirements and provide the information needed by pharmacies to prepare or stock the required medicines.
-
-iv.Team 3 needs to GET patient location information in order to identify pharmacies near the patient that have the required medicine in stock and provide relevant distance and pickup information.
+1. Team 3 needs to GET patient records in order to identify the patients that have undergone surgery and need medicine, create a user on their application and obtain the appropriate patient contact information for communicating medicine availability and pickup details.
+2. Team 3 needs to GET hospital location information in order to identify pharmacies near the patient that have the required medicine in stock and provide relevant distance and pickup information.
+3. Team 3 needs to GET a patient's prescribed medication in order to determine the relevant medicine requirements and provide the information needed by pharmacies to prepare or stock the required medicines.
+4. Team 3 needs to POST that the medicine reservation has been made and they are waiting for a payment.
+5. Team 3 needs to PATCH an existing reservation to relfect that the medicine reservation payment has been received and that the medicine is ready for pick-up .
 
 
 Reflection
