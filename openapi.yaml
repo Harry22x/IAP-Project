@@ -13,25 +13,17 @@ paths:
           required: true
           schema:
             type: string
-            enum: [APPROVED, PENDING]
+            enum:
+              - APPROVED
+              - PENDING
             example: APPROVED
-
       responses:
-              '200':
-                description: A list of approved patients
-                content:
-                  application/json:
-                    schema:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Patient'
-              '400':
-                $ref: '#/components/responses/BadRequestResponse'
-              '500':
-                $ref: '#/components/responses/ServerErrorResponse'
-
-
-  
+        '200':
+          $ref: '#/components/responses/PatientArrayResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '500':
+          $ref: '#/components/responses/ServerErrorResponse'
   /patients/{patient_id}/location:
     get:
       summary: Retrieve hospital location
@@ -43,16 +35,17 @@ paths:
           schema:
             type: integer
             example: 1
-    
       responses:
         '200':
-          $ref: '#/components/responses/Location'
-
-
+          $ref: '#/components/responses/PatientLocation'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
   /patients/{patient_id}/medicine:
     get:
       summary: Return prescribed medication records
-      description: Retrieves prescribed medication records for a patient 
+      description: Retrieves prescribed medication records for a patient
       parameters:
         - name: patient_id
           in: path
@@ -63,12 +56,11 @@ paths:
             example: 1
       responses:
         '200':
-          $ref: '#/components/responses/MedicationListResponse'
+          $ref: '#/components/responses/MedicationResponse'
         '404':
           $ref: '#/components/responses/NotFoundResponse'
         '500':
           $ref: '#/components/responses/ServerErrorResponse'
-
   /patients/{patient_id}/reservation:
     post:
       summary: Create a medicine reservation
@@ -82,11 +74,7 @@ paths:
             type: integer
             example: 1
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateReservationRequest'
+        $ref: '#/components/requestBodies/CreateReservationRequest'
       responses:
         '201':
           $ref: '#/components/responses/ReservationCreatedResponse'
@@ -96,7 +84,6 @@ paths:
           $ref: '#/components/responses/NotFoundResponse'
         '500':
           $ref: '#/components/responses/ServerErrorResponse'
-
     patch:
       summary: Update an existing reservation
       description: Modifies reservation details to confirm that medicine is ready for pickup.
@@ -109,11 +96,7 @@ paths:
             type: integer
             example: 1
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateReservationRequest'
+        $ref: '#/components/requestBodies/UpdateReservationRequest'
       responses:
         '200':
           $ref: '#/components/responses/ReservationUpdatedResponse'
@@ -123,3 +106,239 @@ paths:
           $ref: '#/components/responses/NotFoundResponse'
         '500':
           $ref: '#/components/responses/ServerErrorResponse'
+
+components:
+  responses:
+    PatientArrayResponse:
+      description: A list of patients with their details and match status
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - patient_id
+              - name
+              - Phone_number
+              - match_status
+            properties:
+              patient_id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: John Doe
+              Phone_number:
+                type: string
+                example: '+254712345678'
+              match_status:
+                type: string
+                enum:
+                  - APPROVED
+                  - PENDING
+                example: APPROVED
+
+    BadRequestResponse:
+      description: Invalid  request parameters or missing required fields in the request body
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - error
+            properties:
+              error:
+                type: string
+                example: Invalid request parameters or missing required fields in the request body
+    ServerErrorResponse:
+      description: A server error occurred while processing the request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - error
+              - message
+            properties:
+              error:
+                type: string
+                example: Internal Server Error
+              message:
+                type: string
+                example: An unexpected error occurred while processing the request. Please try again later.
+    PatientLocation:
+      description: Returns the location of the hospital that the patient underwent surgery
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - hospital_id
+              - name
+              - location
+              - longitude
+              - latitude
+            properties:
+              hospital_id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: St. Mary's Hospital
+              location:
+                type: string
+                example: Nairobi CBD
+              longitude:
+                type: number
+                format: float
+                example: 36.8219
+              latitude:
+                type: number
+                format: float
+                example: -1.2921
+    NotFoundResponse:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - error
+              - message
+            properties:
+              error:
+                type: string
+                example: Resource not found
+              message:
+                type: string
+                example: The patient with patien_id 4 was not found
+    MedicationResponse:
+      description: A list of a patient's prescribed medications
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - patient_id
+              - name
+              - prescribed_medicine
+            properties:
+              patient_id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: John Doe
+              prescribed_medicine:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - medicine_name
+                    - dosage
+                  properties:
+                    medicine_name:
+                      type: string
+                      example: Paracetamol
+                    dosage:
+                      type: string
+                      example: 500mg
+    ReservationCreatedResponse:
+      description: Reservation created successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              reservation_id:
+                type: integer
+                example: 1
+              reservation_code:
+                type: string
+                example: PL-9509
+              reservation_status:
+                type: string
+                example: PENDING
+    ReservationUpdatedResponse:
+      description: Reservation updated successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              reservation_code:
+                type: string
+                example: PL-9509
+              reservation_status:
+                type: string
+                example: Reserved
+  requestBodies:
+    CreateReservationRequest:
+      description: Creates a medicine reservation for a patient
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - patient_id
+              - reservation_id
+            properties:
+              patient_id:
+                type: integer
+                example: 1
+              reservation_code:
+                type: string
+                example: PL-9509
+              reservation_status:
+                type: string
+                enum: [Pending, Reserved, Cancelled]
+                example: PENDING
+              reservation_date:
+                type: string
+                format: date-time
+                example: '2024-06-15T10:30:00Z'
+              pickup_window:
+                type: string
+                example: Today, 4:00 PM - 6:00 PM
+              pickup_location:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - name
+                    - location
+                    - longitude
+                    - latitude
+                  properties:
+                    name:
+                      type: string
+                      example: Westlands Medpoint
+                    location:
+                      type: string
+                      example: Westlands
+                    longitude:
+                      type: number
+                      format: float
+                      example: 36.8219
+                    latitude:
+                      type: number
+                      format: float
+                      example: -1.2921
+    UpdateReservationRequest:
+      description: Update an existing medicine reservation for a patient to confirm that the medicine is ready for pickup
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - reservation_code
+              - reservation_status
+            properties:
+              reservation_code:
+                type: string
+                example: PL-9509
+              reservation_status:
+                type: string
+                enum: [Pending, Reserved, Cancelled]
+                example: Reserved
