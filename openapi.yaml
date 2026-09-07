@@ -1,0 +1,125 @@
+openapi: 3.0.0
+info:
+  title: Halo API
+  version: 1.0.0
+paths:
+  /patients:
+    get:
+      summary: Lists approved patients
+      parameters:
+        - name: match_status
+          in: query
+          description: Filter patients by match status
+          required: true
+          schema:
+            type: string
+            enum: [APPROVED, PENDING]
+            example: APPROVED
+
+      responses:
+              '200':
+                description: A list of approved patients
+                content:
+                  application/json:
+                    schema:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Patient'
+              '400':
+                $ref: '#/components/responses/BadRequestResponse'
+              '500':
+                $ref: '#/components/responses/ServerErrorResponse'
+
+
+  
+  /patients/{patient_id}/location:
+    get:
+      summary: Retrieve hospital location
+      description: Fetches the hospital's location associated with the patient to identify nearby pharmacies with stock.
+      parameters:
+        - name: patient_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+    
+      responses:
+        '200':
+          $ref: '#/components/responses/Location'
+
+
+  /patients/{patient_id}/medicine:
+    get:
+      summary: Return prescribed medication records
+      description: Retrieves prescribed medication records for a patient 
+      parameters:
+        - name: patient_id
+          in: path
+          required: true
+          description: Unique identifier of the patient
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          $ref: '#/components/responses/MedicationListResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '500':
+          $ref: '#/components/responses/ServerErrorResponse'
+
+  /patients/{patient_id}/reservation:
+    post:
+      summary: Create a medicine reservation
+      description: Creates a new reservation and triggers a notification to inform the patient that medicine is available.
+      parameters:
+        - name: patient_id
+          in: path
+          required: true
+          description: Unique identifier of the patient
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReservationRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/ReservationCreatedResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '500':
+          $ref: '#/components/responses/ServerErrorResponse'
+
+    patch:
+      summary: Update an existing reservation
+      description: Modifies reservation details to confirm that medicine is ready for pickup.
+      parameters:
+        - name: patient_id
+          in: path
+          required: true
+          description: Unique identifier of the patient
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateReservationRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ReservationUpdatedResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '500':
+          $ref: '#/components/responses/ServerErrorResponse'

@@ -1,0 +1,28 @@
+description: A list of patients with their details and match status
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - patient_id
+        - name
+        - Phone_number
+        - match_status
+        - required_medicine
+      properties:
+        patient_id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "John Doe"
+        Phone_number:
+          type: string
+          example: "+254712345678"
+        match_status:
+          type: string
+          enum: [APPROVED, PENDING]
+          example: "APPROVED"
+        required_medicine:
+          type: string
+          example: "Paracetamol"
