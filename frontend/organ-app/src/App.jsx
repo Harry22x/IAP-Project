@@ -10,6 +10,7 @@ import Register from './components/Register'
 import TCDash from './components/TCDash'
 import TCPatients from './components/TCPatients'
 import TCMatches from './components/TCMatches'
+import PatientsTable from './components/PatientsTable'
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom'
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path='/tc' element={<TCDash />} />
         <Route path='/patients' element={<TCPatients />} />
         <Route path='/matches' element={<TCMatches />} />
+        <Route path='/patients-table' element={<PatientsTable/>} />
       </Routes>
     </Router>
   )
