@@ -1,8 +1,13 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
+from django.db.models import Q
 from .models import Patient, Donor, Recipient
 from .serializers import PatientSerializer, DonorSerializer, RecipientSerializer, UnifiedPatientSerializer
+from hospitals.serializers import HospitalSerializer
+from medical_records.models import Prescription
+from medical_records.serializers import PrescriptionSerializer
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
 
 class PatientViewSet(viewsets.ModelViewSet):
     serializer_class = PatientSerializer
@@ -10,11 +15,39 @@ class PatientViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.request.user.hospital:
-            return Patient.objects.filter(hospital=self.request.user.hospital)
-        return Patient.objects.all()
+            queryset = Patient.objects.filter(hospital=self.request.user.hospital)
+        else:
+            queryset = Patient.objects.all()
+
+        match_status = self.request.query_params.get('match_status')
+        if match_status:
+            queryset = queryset.filter(
+                Q(donor_profile__matches__match_status=match_status) |
+                Q(recipient_profile__matches__match_status=match_status)
+            ).distinct()
+
+        return queryset
 
     def perform_create(self, serializer):
         serializer.save(hospital=self.request.user.hospital)
+
+    @action(detail=True, methods=['get'], url_path='location')
+    def location(self, request, pk=None):
+        patient = self.get_object()
+        return Response(HospitalSerializer(patient.hospital).data)
+
+    @action(detail=True, methods=['get'], url_path='medicine')
+    def medicine(self, request, pk=None):
+        patient = self.get_object()
+        prescriptions = Prescription.objects.filter(patient=patient)
+        return Response({
+            'patient_id': patient.patient_id,
+            'name': patient.name,
+            'prescribed_medicine': PrescriptionSerializer(
+                prescriptions,
+                many=True
+            ).data,
+        })
 
 class DonorViewSet(viewsets.ModelViewSet):
     serializer_class = DonorSerializer
