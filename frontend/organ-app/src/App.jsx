@@ -31,10 +31,6 @@ function App() {
         <Route path='/matches' element={<TCMatches />} />
         <Route path='/students' element={<StudentsTable />} />
       </Routes>
-      {/* <div>
-        <h1>Students</h1>
-        <StudentsTable />
-      </div> */}
     </Router>
   )
 }
