@@ -14,6 +14,7 @@ class Patient(TimeStampedModel):
     organ_type = models.CharField(max_length=100)
     medical_history = models.TextField()
     urgency_level = models.IntegerField(help_text="Higher number = more urgent", default=1)
+    phone_number = models.CharField(max_length=20, default="+254712345678")
 
     def __str__(self):
         return f"Patient {self.patient_id} ({self.organ_type})"

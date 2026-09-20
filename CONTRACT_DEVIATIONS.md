@@ -1,0 +1,1 @@
+1. Removed the match_status field from the /patients endpoint response since the value is already provided as a query parameter therefore it adds unecessary logic to have to retrieve it from another table.

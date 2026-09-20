@@ -119,7 +119,7 @@ components:
               - patient_id
               - name
               - Phone_number
-              - match_status
+      
             properties:
               patient_id:
                 type: integer
@@ -130,12 +130,7 @@ components:
               Phone_number:
                 type: string
                 example: '+254712345678'
-              match_status:
-                type: string
-                enum:
-                  - APPROVED
-                  - PENDING
-                example: APPROVED
+
 
     BadRequestResponse:
       description: Invalid  request parameters or missing required fields in the request body

@@ -52,3 +52,17 @@ class MedicalRecord(TimeStampedModel):
 
     def __str__(self):
         return f"{self.get_record_type_display()} for Patient {self.patient.patient_id} ({self.test_date})"
+
+
+class Prescription(TimeStampedModel):
+    prescription_id = models.AutoField(primary_key=True)
+    patient = models.ForeignKey(
+        Patient,
+        on_delete=models.CASCADE,
+        related_name='prescriptions'
+    )
+    medicine_name = models.CharField(max_length=255)
+    dosage = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.medicine_name} for Patient {self.patient.patient_id}"
