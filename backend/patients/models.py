@@ -48,3 +48,29 @@ class Recipient(models.Model):
 
     def __str__(self):
         return f"Recipient {self.recipient_id.patient_id} - {self.waiting_list_status}"
+
+class Reservation(models.Model):
+    RESERVATION_STATUS_CHOICES = (
+        ('PENDING', 'Pending'),
+        ('CONFIRMED', 'Confirmed'),
+        ('COMPLETED', 'Completed'),
+        ('CANCELLED', 'Cancelled'),
+    )
+
+    patient = models.ForeignKey(
+        Patient,
+        on_delete=models.CASCADE,
+        related_name='reservations',
+    )
+    reservation_code = models.CharField(max_length=20, primary_key=True)
+    reservation_status = models.CharField(
+        max_length=20,
+        choices=RESERVATION_STATUS_CHOICES,
+        default='PENDING',
+    )
+    reservation_date = models.DateTimeField()
+    pickup_window = models.CharField(max_length=100)
+    pickup_location = models.JSONField(default=list)
+
+    def __str__(self):
+        return self.reservation_code

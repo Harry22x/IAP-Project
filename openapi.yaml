@@ -275,12 +275,8 @@ components:
           schema:
             type: object
             required:
-              - patient_id
               - reservation_id
             properties:
-              patient_id:
-                type: integer
-                example: 1
               reservation_code:
                 type: string
                 example: PL-9509
