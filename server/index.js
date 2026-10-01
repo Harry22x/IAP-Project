@@ -8,13 +8,31 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
+// app.get('/', (req, res) => {
+//     res.send('API is running');
+// })
+
+// const studentRoutes = require('./routes/students');
+// app.use('/api/students', studentRoutes);
+
+// app.listen(PORT, () => {
+//     console.log(`Server running on http://localhost:${PORT}`);
+// })
+
+app.get('/', (req,res) =>{
     res.send('API is running');
-})
+});
 
-const studentRoutes = require('./routes/students');
-app.use('/api/students', studentRoutes);
+const patientRoutes = require('./routes/patients');
+const patientLocationRoutes = require('./routes/patientsLocation');
+const patientMedicineRoutes = require('./routes/patientsMedicine');
+const patientReservationRoutes = require('./routes/patientsReservationPost');
+app.use('/api/patients', patientRoutes);
+app.use('/api/patients', patientLocationRoutes);
+app.use('/api/patients', patientMedicineRoutes);
+app.use('/api/patients', patientReservationRoutes);
+app.use('/api/patients', patientsReservationPatchRoutes);
 
-app.listen(PORT, () => {
+app.listen(PORT, ()=>{
     console.log(`Server running on http://localhost:${PORT}`);
-})
+});
