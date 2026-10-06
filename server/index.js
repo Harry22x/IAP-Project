@@ -16,6 +16,7 @@ const patientRoutes = require('./routes/patients');
 const patientLocationRoutes = require('./routes/patientsLocation');
 const patientMedicineRoutes = require('./routes/patientsMedicine');
 const patientReservationRoutes = require('./routes/patientsReservationPost');
+const patientsReservationPatchRoutes= require('./routes/patientsReservationPatch');
 app.use('/api/patients', patientRoutes);
 app.use('/api/patients', patientLocationRoutes);
 app.use('/api/patients', patientMedicineRoutes);
