@@ -4,10 +4,10 @@ const db = require('../db');
 
 const RESERVATION_STATUSES = new Set([
     'Pending',
-    'Reserved',
+    'Delivered',
     'Cancelled',
     'PENDING',
-    'RESERVED',
+    'DELIVERED',
     'CANCELLED'
 ]);
 

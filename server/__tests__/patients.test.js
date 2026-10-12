@@ -14,5 +14,17 @@ describe('GET/patients?match_status' , () => {
         expect(Array.isArray(res.body)).toBe(true);
         expect(res.body[0]).toHaveProperty('patient_id');
         expect(res.body[0]).toHaveProperty('name');
+        expect(res.body[0]).toHaveProperty('phone_number');
+    }),
+
+
+ it('returns 400 for an invalid match_status', async() => {
+        const res = await request(app).get('/api/patients?match_status=90233');
+        expect(res.status).toBe(400);
+        expect(res.body).toHaveProperty('error');
     });
-})
+
+}
+);
+
+
