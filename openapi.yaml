@@ -265,7 +265,7 @@ components:
                 example: PL-9509
               reservation_status:
                 type: string
-                example: Reserved
+                example: Delivered
   requestBodies:
     CreateReservationRequest:
       description: Creates a medicine reservation for a patient
