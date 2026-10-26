@@ -41,4 +41,7 @@ class MatchViewSet(viewsets.ModelViewSet):
         
         matches = OrganMatchingService.get_compatible_donors(recipient)
         serializer = self.get_serializer(matches, many=True)
-        return Response(serializer.data)
+        producer_matches = OrganMatchingService.get_producer_matches(recipient)
+        combined = list(serializer.data) + producer_matches
+        combined.sort(key=lambda item: float(item.get('compatibility_score') or 0), reverse=True)
+        return Response(combined)
