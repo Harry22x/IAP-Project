@@ -16,7 +16,7 @@ def to_blood_group(blood_type, rhesus):
 
 
 def fetch_artisan_donors():
-    """Live lookup of Jua Kali artisans (Option A). Returns [] if the producer is down."""
+    """ Returns [] if the producer is down."""
     base_url = getattr(settings, "ARTISAN_API_URL", "http://localhost:3000").rstrip("/")
     try:
         with httpx.Client(timeout=5.0) as client:

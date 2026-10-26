@@ -63,14 +63,26 @@ class OrganMatchingService:
 
     @staticmethod
     def get_producer_matches(recipient: Recipient):
-        """Live Option A lookup: compatible Jua Kali artisans by ABO/Rh only."""
+        """ compatible Jua Kali artisans by ABO/Rh only."""
         recipient_blood = recipient.recipient_id.blood_type
         allowed = OrganMatchingService.BLOOD_COMPATIBILITY.get(recipient_blood, [])
         artisan_donors = fetch_artisan_donors()
-        matches = []
+        # Deduplicate artisans that are already registered as a match for this recipient in DB
+        existing_matches = Match.objects.filter(recipient=recipient)
+        existing_artisan_ids = set()
+        for m in existing_matches:
+            if m.donor and '[Jua Kali Artisan:' in (getattr(m.donor.donor_id, 'medical_history', '') or ''):
+                try:
+                    aid = m.donor.donor_id.medical_history.split('[Jua Kali Artisan:')[1].split(']')[0].strip()
+                    existing_artisan_ids.add(aid)
+                except Exception:
+                    pass
 
+        matches = []
         for donor in artisan_donors:
             if donor["blood_group"] not in allowed:
+                continue
+            if donor.get("artisan_id") in existing_artisan_ids:
                 continue
             blood_score = 40 if donor["blood_group"] == recipient_blood else 25
             urgency = recipient.recipient_id.urgency_level
