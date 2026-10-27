@@ -48,6 +48,7 @@ class UnifiedPatientViewSet(viewsets.ViewSet):
             is_donor = hasattr(p, 'donor_profile')
             data.append({
                 'id': p.patient_id,
+                'patient_id': p.patient_id,
                 'name': p.name,
                 'patient_type': 'Donor' if is_donor else 'Recipient',
                 'organ': p.organ_type,

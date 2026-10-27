@@ -3,10 +3,25 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
+const VALID_KEYS = (process.env.API_KEYS || '').split(',').filter(Boolean);
+
+function requireApiKey(req, res, next){
+    const key = req.get('X-API-Key');
+    if(!key || !VALID_KEYS.includes(key)){
+        return res.status(401).json({message:'Missing or invalid API key'})
+    }
+    req.apiKey = key;
+    next();
+
+}
+
+
+
 
 app.use(cors());
 app.use(express.json());
+app.use(requireApiKey);
 
 // app.get('/', (req, res) => {
 //     res.send('API is running');

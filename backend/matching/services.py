@@ -1,6 +1,7 @@
 from django.utils import timezone
 from .models import Match
 from patients.models import Donor, Recipient
+from .artisan_client import fetch_artisan_donors
 
 class OrganMatchingService:
     # Blood Type Compatibility Mapping (Recipient -> List of compatible Donor types)
@@ -59,6 +60,66 @@ class OrganMatchingService:
             Match.objects.bulk_create(matches)
         
         return Match.objects.filter(recipient=recipient).order_by('-compatibility_score')
+
+    @staticmethod
+    def get_producer_matches(recipient: Recipient):
+        """ compatible Jua Kali artisans by ABO/Rh only."""
+        recipient_blood = recipient.recipient_id.blood_type
+        allowed = OrganMatchingService.BLOOD_COMPATIBILITY.get(recipient_blood, [])
+        artisan_donors = fetch_artisan_donors()
+        # Deduplicate artisans that are already registered as a match for this recipient in DB
+        existing_matches = Match.objects.filter(recipient=recipient)
+        existing_artisan_ids = set()
+        for m in existing_matches:
+            if m.donor and '[Jua Kali Artisan:' in (getattr(m.donor.donor_id, 'medical_history', '') or ''):
+                try:
+                    aid = m.donor.donor_id.medical_history.split('[Jua Kali Artisan:')[1].split(']')[0].strip()
+                    existing_artisan_ids.add(aid)
+                except Exception:
+                    pass
+
+        matches = []
+        for donor in artisan_donors:
+            if donor["blood_group"] not in allowed:
+                continue
+            if donor.get("artisan_id") in existing_artisan_ids:
+                continue
+            blood_score = 40 if donor["blood_group"] == recipient_blood else 25
+            urgency = recipient.recipient_id.urgency_level
+            if urgency >= 3:
+                urgency_score = 25
+            elif urgency == 2:
+                urgency_score = 15
+            else:
+                urgency_score = 5
+            days_waiting = (timezone.now() - recipient.recipient_id.created_at).days
+            if days_waiting > 30:
+                wait_score = 15
+            elif days_waiting > 7:
+                wait_score = 10
+            else:
+                wait_score = 5
+            score = float(blood_score + urgency_score + wait_score + 5)
+
+            matches.append({
+                "match_id": f"jk-{donor['artisan_id']}",
+                "donor": None,
+                "donor_name": donor["name"],
+                "recipient": recipient.recipient_id.patient_id,
+                "recipient_name": recipient.recipient_id.name,
+                "organ": recipient.recipient_id.organ_type,
+                "blood_type": donor["blood_group"],
+                "source": "jua-kali",
+                "compatibility_score": score,
+                "match_status": "PENDING",
+                "match_date": None,
+                "scheduled_date": None,
+                "artisan_id": donor["artisan_id"],
+                "phone": donor["phone"],
+            })
+
+        matches.sort(key=lambda item: item["compatibility_score"], reverse=True)
+        return matches
 
     @staticmethod
     def calculate_weighted_score(donor: Donor, recipient: Recipient, donor_records):

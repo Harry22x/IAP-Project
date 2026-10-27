@@ -77,14 +77,30 @@ function TCMatches() {
 
     const confirmStatusUpdate = async (matchId, newStatus, scheduledDate = null) => {
         try {
+            const currentMatch = matchResults.find(m => m.match_id === matchId) || {};
             const payload = { match_status: newStatus };
             if (scheduledDate) payload.scheduled_date = scheduledDate;
-            
-            await api.patch(`/matching/${matchId}/`, payload);
+
+            if (String(matchId).startsWith('jk-') || currentMatch.source === 'jua-kali') {
+                payload.recipient = currentMatch.recipient;
+                payload.artisan_id = currentMatch.artisan_id;
+                payload.donor_name = currentMatch.donor_name;
+                payload.phone = currentMatch.phone;
+                payload.blood_type = currentMatch.blood_type;
+                payload.compatibility_score = currentMatch.compatibility_score;
+                payload.source = currentMatch.source;
+            }
+
+            const res = await api.patch(`/matching/${matchId}/`, payload);
             showNotification(`Match status successfully updated to ${newStatus}`);
             
             // Update local state
-            setMatchResults(prev => prev.map(m => m.match_id === matchId ? { ...m, match_status: newStatus } : m));
+            setMatchResults(prev => prev.map(m => m.match_id === matchId ? { 
+                ...m, 
+                match_status: newStatus,
+                match_id: res.data?.match_id || m.match_id,
+                scheduled_date: scheduledDate || m.scheduled_date
+            } : m));
             setScheduleModal({ isOpen: false, matchId: null, status: null, date: '' });
         } catch (err) {
             console.error("Failed to update match status", err);
@@ -266,7 +282,21 @@ function TCMatches() {
                                         {matchResults.map((m, idx) => (
                                             <tr key={idx} className="hover:bg-green-50/50 transition-colors">
                                                 <td className="px-6 py-4 text-sm font-mono text-slate-500">#{m.match_id}</td>
-                                                <td className="px-6 py-4 text-sm font-bold text-[#042d6d]">{m.donor_name}</td>
+                                                <td className="px-6 py-4 text-sm font-bold text-[#042d6d]">
+                                                    <div className="flex items-center gap-2">
+                                                        <span>{m.donor_name}</span>
+                                                        {m.source === 'jua-kali' ? (
+                                                            <span className="px-2 py-0.5 text-[10px] font-bold bg-amber-100 text-amber-800 rounded-full border border-amber-200">
+                                                                Jua Kali Artisan
+                                                            </span>
+                                                        ) : (
+                                                            <span className="px-2 py-0.5 text-[10px] font-bold bg-slate-100 text-slate-700 rounded-full border border-slate-200">
+                                                                Hospital
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                    {m.phone && <p className="text-xs text-slate-400 font-normal mt-0.5">{m.phone}</p>}
+                                                </td>
                                                 <td className="px-6 py-4">
                                                     <div className="flex items-center gap-2">
                                                         <div className="w-full bg-slate-200 rounded-full h-2.5 max-w-[100px]">
