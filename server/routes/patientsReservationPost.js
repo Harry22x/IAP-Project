@@ -103,7 +103,7 @@ router.post('/:patient_id/reservation', async (req, res) => {
                 req.body.reservation_code.trim(),
                 req.body.reservation_status,
                 req.body.reservation_date,
-                req.body.pickup_window.trim(),
+                req.body.pickup_window.trim(), 
                 JSON.stringify(req.body.pickup_location),
             ]
         );
