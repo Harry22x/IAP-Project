@@ -110,10 +110,11 @@ router.post('/:patient_id/reservation', async (req, res) => {
 
         return res.status(201).json(reservationRows.rows[0]);
     } catch (err) {
-        console.error(err);
-        return res.status(500).json({ error: "Internal Server Error",
-                                    message: "An unexpected error occurred while processing the request. Please try again later.",
-                                    detail: err.detail});
+        console.error('Reservation creation error', err);
+        return res.status(500).json({
+            error: 'Internal server error',
+            message: 'An unexpected error occurred while creating the reservation',
+        })
     }
 });
 
