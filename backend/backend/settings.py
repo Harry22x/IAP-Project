@@ -175,3 +175,4 @@ CORS_ALLOW_ALL_ORIGINS = True # For development only
 
 # Jua Kali (Team 1) producer API — live artisan blood-group lookup
 ARTISAN_API_URL = os.getenv('ARTISAN_API_URL', 'http://localhost:3000')
+ARTISAN_API_KEY = os.getenv('ARTISAN_API_KEY')
