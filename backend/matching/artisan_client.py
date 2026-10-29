@@ -23,7 +23,7 @@ def fetch_artisan_donors():
     if api_key:
         headers["X-API-Key"] = api_key
     try:
-        with httpx.Client(timeout=5.0) as client:
+        with httpx.Client(timeout=360.0) as client:
             response = client.get(f"{base_url}/api/artisans", headers=headers)
             response.raise_for_status()
             payload = response.json()
