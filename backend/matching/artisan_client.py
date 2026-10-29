@@ -18,9 +18,13 @@ def to_blood_group(blood_type, rhesus):
 def fetch_artisan_donors():
     """ Returns [] if the producer is down."""
     base_url = getattr(settings, "ARTISAN_API_URL", "http://localhost:3000").rstrip("/")
+    api_key = getattr(settings, "ARTISAN_API_KEY", None)
+    headers = {}
+    if api_key:
+        headers["X-API-Key"] = api_key
     try:
         with httpx.Client(timeout=5.0) as client:
-            response = client.get(f"{base_url}/api/artisans")
+            response = client.get(f"{base_url}/api/artisans", headers=headers)
             response.raise_for_status()
             payload = response.json()
     except httpx.HTTPError as exc:
