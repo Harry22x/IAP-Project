@@ -10,7 +10,7 @@ router.get('/:patient_id/medicine', async (req, res) => {
                     return res.status(400).json({error:"Invalid request parameters or missing required fields in the request body"})
                 }
 		const patientRows = await db.query(
-			'SELECT patient_id, name FROM patients_patient WHERE patient_id = $1',
+			'SELECT patient_id, name,phone_number FROM patients_patient WHERE patient_id = $1',
 			[patientId]
 		);
 
@@ -29,6 +29,7 @@ router.get('/:patient_id/medicine', async (req, res) => {
 		res.json({
 			patient_id: patientRows.rows[0].patient_id,
 			name: patientRows.rows[0].name,
+			phone_number: patientRows.rows[0].phone_number,
 			prescribed_medicine: prescriptionRows.rows,
 		});
 	} catch (err) {
