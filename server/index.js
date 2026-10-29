@@ -35,7 +35,7 @@ app.use(requireApiKey);
 // rate limiting
 app.use(rateLimit({
     windowMs: 60 *1000,
-    max: 100
+    max: 80
 }))
 
 app.get('/', (req,res) =>{
