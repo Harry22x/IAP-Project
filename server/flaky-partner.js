@@ -5,7 +5,7 @@ let mode = 'slow'; // ok | slow | flaky | error
 
 let calls = 0;
 
-const artisans = [{
+const artisans = {"artisans":[{
             "id": "u-1793217446818",
             "fullname": "Aubrey Graham",
             "phone": "+254755555555",
@@ -51,7 +51,7 @@ const artisans = [{
             "rhesus_factor": "negative"
         },
         
-    ];
+    ]};
 
     
 
@@ -76,4 +76,4 @@ app.get('/api/artisans', async (req,res)=>{
     res.json(artisans)
 });
 
-app.listen(4000,()=> console.log('Stand in partner on http"//localhost:4000'))
+app.listen(4000,()=> console.log('Stand in partner on http://localhost:4000'))
