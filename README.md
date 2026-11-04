@@ -107,41 +107,48 @@ curl -H "X-API-Key: <your-api-key>" http://localhost:5000/stats
 ### Example Response (`200 OK`)
 ```json
 {
-  "startedAt": "2026-11-04T13:29:40.443Z",
-  "uptimeSeconds": 96,
-  "total": 250,
-  "clientErrors": 151,
+  "startedAt": "2026-11-04T19:07:57.064Z",
+  "uptimeSeconds": 58,
+  "total": 115,
+  "clientErrors": 61,
   "serverErrors": 0,
   "errorRatePercent": 0,
-  "avgMs": 1.7,
+  "avgMs": 4.7,
   "routes": {
-    "GET /api/patients/": {
-      "count": 25,
-      "clientErrors": 0,
+    "POST /api/patients/:patient_id/reservation": {
+      "count": 30,
+      "clientErrors": 20,
       "serverErrors": 0,
-      "avgMs": 4.9,
-      "maxMs": 77.7
+      "avgMs": 4.2,
+      "maxMs": 27.1
     },
     "GET /api/patients/:patient_id/location": {
-      "count": 78,
-      "clientErrors": 21,
-      "serverErrors": 0,
-      "avgMs": 2.6,
-      "maxMs": 43.3
-    },
-    "GET /api/patients/:patient_id/medicine": {
-      "count": 29,
+      "count": 32,
       "clientErrors": 12,
       "serverErrors": 0,
-      "avgMs": 2.3,
-      "maxMs": 26.9
+      "avgMs": 4.8,
+      "maxMs": 101.6
+    },
+    "GET /api/patients/": {
+      "count": 16,
+      "clientErrors": 0,
+      "serverErrors": 0,
+      "avgMs": 2.4,
+      "maxMs": 5.6
+    },
+    "GET /api/patients/:patient_id/medicine": {
+      "count": 14,
+      "clientErrors": 6,
+      "serverErrors": 0,
+      "avgMs": 14.1,
+      "maxMs": 173.3
     },
     "GET (no route)": {
-      "count": 118,
-      "clientErrors": 118,
+      "count": 23,
+      "clientErrors": 23,
       "serverErrors": 0,
-      "avgMs": 0.2,
-      "maxMs": 1.8
+      "avgMs": 0.9,
+      "maxMs": 5.9
     }
   }
 }
