@@ -90,4 +90,4 @@ POST /patients/3/reservation with body { <br>
 
 # QuickStart command
 
-curl http://localhost:5000/api/patients?match_status=APPROVED
+curl -H "Authorization: Bearer <token>"  https://iap-projects.onrender.com/api/patients?match_status=APPROVED
