@@ -91,3 +91,58 @@ POST /patients/3/reservation with body { <br>
 # QuickStart command
 
 curl -H "Authorization: Bearer <token>"  https://iap-projects.onrender.com/api/patients?match_status=APPROVED
+
+
+# /stats (Monitoring & Metrics)
+
+The `/stats` endpoint provides in-memory operational metrics for the API, tracking total requests, error rates (client 4xx vs. server 5xx), average response latency, and a breakdown per route pattern.
+
+### Authentication
+Requires a valid API key passed in the `X-API-Key` header:
+
+```bash
+curl -H "X-API-Key: <your-api-key>" http://localhost:5000/stats
+```
+
+### Example Response (`200 OK`)
+```json
+{
+  "startedAt": "2026-11-04T13:29:40.443Z",
+  "uptimeSeconds": 96,
+  "total": 250,
+  "clientErrors": 151,
+  "serverErrors": 0,
+  "errorRatePercent": 0,
+  "avgMs": 1.7,
+  "routes": {
+    "GET /api/patients/": {
+      "count": 25,
+      "clientErrors": 0,
+      "serverErrors": 0,
+      "avgMs": 4.9,
+      "maxMs": 77.7
+    },
+    "GET /api/patients/:patient_id/location": {
+      "count": 78,
+      "clientErrors": 21,
+      "serverErrors": 0,
+      "avgMs": 2.6,
+      "maxMs": 43.3
+    },
+    "GET /api/patients/:patient_id/medicine": {
+      "count": 29,
+      "clientErrors": 12,
+      "serverErrors": 0,
+      "avgMs": 2.3,
+      "maxMs": 26.9
+    },
+    "GET (no route)": {
+      "count": 118,
+      "clientErrors": 118,
+      "serverErrors": 0,
+      "avgMs": 0.2,
+      "maxMs": 1.8
+    }
+  }
+}
+```
