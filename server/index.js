@@ -71,6 +71,7 @@ app.use('/api/patients', patientLocationRoutes);
 app.use('/api/patients', patientMedicineRoutes);
 app.use('/api/patients', patientReservationRoutes);
 app.use('/api/patients', patientsReservationPatchRoutes);
+app.use('/', require('./routes/upcoming'));
 
 if (require.main === module) {
     app.listen(PORT, '0.0.0.0', () => console.log(`Listening on ${PORT}`));
