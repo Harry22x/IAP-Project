@@ -16,3 +16,4 @@ test('the wrong parser fails loudly, not quietly', () => {
     expect(() => versions.v1.parse(v2Body)).toThrow();
     expect(() => versions.v2.parse(v1Body)).toThrow('unexpected v2 shape');
 });
+

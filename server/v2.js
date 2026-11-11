@@ -71,3 +71,4 @@ router.use('/api/patients', patientReservationRoutes);
 router.use('/api/patients', patientsReservationPatchRoutes);
 
 module.exports = router;
+

@@ -9,3 +9,4 @@ function deprecated({ sunset, successor }) {
 }
 
 module.exports = { deprecated };
+
