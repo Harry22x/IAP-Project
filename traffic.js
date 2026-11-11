@@ -1,9 +1,6 @@
-// traffic.js: sends a mix of requests to your API, to give you data.
-// Run: API=http://localhost:5000 KEY=<your-key> node traffic.js
-// Adapt the paths in `mix` to your own API.
 
-const API = process.env.API || 'http://localhost:5000';
-const KEY = process.env.KEY || 'week12-test-key-organ2026';
+const API = process.env.API || 'https://iap-projects.onrender.com/stats';
+const KEY = process.env.KEY || '8a9b0ad1ad988f3267c5fdf4a8538b28cbcfa57676a0ea1a';
 const N = Number(process.env.N || 75);
 
 function getReservationPayload(code = `PL-${Date.now().toString().slice(-4)}${Math.floor(Math.random() * 900 + 100)}`) {

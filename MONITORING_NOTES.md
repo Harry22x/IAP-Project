@@ -1,3 +1,5 @@
+
+
 # Monitoring Notes — Week 12
 
 ## Part A: Logging Rules & Predictions
@@ -33,6 +35,7 @@
 ---
 
 ## Part E: Actual Data & Observations
+*(To be completed after running traffic in Part D)*
 
 ### 1. Predicted vs. Actual Numbers
 

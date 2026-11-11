@@ -60,17 +60,15 @@ app.get('/', (req, res) => {
     res.send('API is running');
 });
 
-const patientRoutes = require('./routes/patients');
-const patientLocationRoutes = require('./routes/patientsLocation');
-const patientMedicineRoutes = require('./routes/patientsMedicine');
-const patientReservationRoutes = require('./routes/patientsReservationPost');
-const patientsReservationPatchRoutes = require('./routes/patientsReservationPatch');
+// 5. VERSIONED ROUTING
+const v1 = require('./v1');
+const v2 = require('./v2');
 
-app.use('/api/patients', patientRoutes);
-app.use('/api/patients', patientLocationRoutes);
-app.use('/api/patients', patientMedicineRoutes);
-app.use('/api/patients', patientReservationRoutes);
-app.use('/api/patients', patientsReservationPatchRoutes);
+app.use('/v2', v2);  // The new version (wrapped { data, count }, phone)
+app.use('/v1', v1);  // The old version (carrying Deprecation headers)
+app.use('/', v1);    // Old URLs with no version (/api/patients) keep working!
+
+// Partner integration route (from Week 11)
 app.use('/', require('./routes/upcoming'));
 
 if (require.main === module) {

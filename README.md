@@ -6,20 +6,36 @@ This API will be used by the PharmaLink application (Team 3) to connect our pati
 # Auth instructions
 
 
-# /patients
-example: <br>
-GET/patients?match_status=APPROVED --> 200 {[
-    {
+# API Versions & Endpoints
+
+### Version 2 (Recommended - Active)
+- **`GET /v2/api/patients?match_status=APPROVED`**  
+  Returns patients wrapped in `{ data, count }` with normalized field `phone`:
+  ```json
+  {
+    "data": [
+      {
         "patient_id": 3,
-        "name": "John Smith",
-        "phone_number": "+254712345678"
-    },
+        "name": "Blue orange",
+        "phone": "+254712345678"
+      }
+    ],
+    "count": 1
+  }
+  ```
+
+### Version 1 (Deprecated - Sunset Date: Nov 20, 2026)
+- **`GET /api/patients?match_status=APPROVED`** (or `GET /v1/api/patients?match_status=APPROVED`)  
+  Returns the legacy bare array and carries RFC `Deprecation`, `Sunset`, and `Link` response headers:
+  ```json
+  [
     {
-        "patient_id": 4,
-        "name": "Jane Smith",
-        "phone_number": "+254712345678"
+      "patient_id": 3,
+      "name": "Blue orange",
+      "phone_number": "+254712345678"
     }
-]}
+  ]
+  ```
 
 # /patients/{patient_id}/location:
 
