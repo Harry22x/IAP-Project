@@ -13,7 +13,7 @@ try{
     let match_statuses = ['approved', 'pending'];
 
     if(!match_statuses.includes(matchStatus.toLowerCase())){
-         res.status(400).json({error:"Invalid request parameters or missing required fields in the request body"})
+         return res.status(400).json({error:"Invalid request parameters or missing required fields in the request body"})
     }
 
     if (matchStatus) {

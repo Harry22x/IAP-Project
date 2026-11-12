@@ -9,6 +9,8 @@ afterAll(async () => {
     await db.end();
 });
 
+const apiKey = process.env.API_KEYS ? process.env.API_KEYS.split(',')[0].trim() : '';
+
 
 describe('POST/patients/{patient_id}/reservation', () => {
     let createdReservationCode = null;
@@ -37,7 +39,7 @@ describe('POST/patients/{patient_id}/reservation', () => {
   ]
 }
 
-    const res = await request(app).post('/api/patients/3/reservation').send(payload);
+    const res = await request(app).post('/api/patients/3/reservation').send(payload).set('x-api-key', apiKey);;
 
     expect(res.status).toBe(201);
     expect(res.body).toHaveProperty('reservation_code')
@@ -52,7 +54,7 @@ describe('POST/patients/{patient_id}/reservation', () => {
             "reservationCode" : "PL-5999"
         }
 
-        const res = await request(app).post('/api/patients/3/reservation').send(payload);
+        const res = await request(app).post('/api/patients/3/reservation').send(payload).set('x-api-key', apiKey);;
 
         expect(res.status).toBe(400);
         expect(res.body).toHaveProperty('error')
@@ -74,7 +76,7 @@ describe('POST/patients/{patient_id}/reservation', () => {
   ]
 }
 
-        const res = await request(app).post('/api/patients/999/reservation').send(payload);
+        const res = await request(app).post('/api/patients/999/reservation').send(payload).set('x-api-key', apiKey);;
 
         expect(res.status).toBe(404);
         expect(res.body).toHaveProperty('error')

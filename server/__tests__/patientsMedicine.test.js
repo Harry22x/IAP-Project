@@ -6,10 +6,11 @@ afterAll(async () => {
     await db.end();
 });
 
+const apiKey = process.env.API_KEYS ? process.env.API_KEYS.split(',')[0].trim() : '';
 
 describe('GET/patients/{patient_id}/medicine', () => {
     it('returns 200 for a successfull fetch with the correct response body', async() => {
-        const res = await request(app).get('/api/patients/3/medicine');
+        const res = await request(app).get('/api/patients/3/medicine').set('x-api-key', apiKey);
         expect(res.status).toBe(200);
         expect(res.body).toHaveProperty('patient_id');
         expect(res.body.prescribed_medicine[0]).toHaveProperty('medicine_name');
@@ -17,7 +18,7 @@ describe('GET/patients/{patient_id}/medicine', () => {
     });
 
     it('returns 404 for a patient_id that does not exist', async()=> {
-        const res = await request(app).get('/api/patients/99999/location');
+        const res = await request(app).get('/api/patients/99999/location').set('x-api-key', apiKey);;
         expect(res.status).toBe(404);
         expect(res.body).toHaveProperty('error');
     })
